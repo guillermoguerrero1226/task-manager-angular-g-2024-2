@@ -1,0 +1,17 @@
+<div class="error-container">
+    <ng-container [ngSwitch]="errorCode">
+        <div *ngSwitchCase="404">
+            <h1>Error 404</h1>
+            <p>Page not found</p>
+        </div>
+        <div *ngSwitchCase="500">
+            <h1>Error 500</h1>
+            <p>Server internal error</p>
+        </div>
+        <div *ngSwitchDefault>
+            <h1>Error {{ errorCode }}</h1>
+            <p>Unexpected Error. Please contact the admin site</p>
+        </div>
+    </ng-container>
+    <button (click)="goBack()">Regresar</button>
+</div>
