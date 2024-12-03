@@ -6,11 +6,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout develop
-            }
-        }
 
         stage('Install Dependencies') {
             steps {
@@ -20,7 +15,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'ng build --prod'
+                sh 'ng build'
             }
         }
 
