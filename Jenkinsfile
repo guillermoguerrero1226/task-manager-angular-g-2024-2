@@ -19,6 +19,12 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                sh 'npm run test --watch=false --browsers=ChromeHeadless'
+            }
+        }
+
         stage('Archive Artifacts') {
             steps {
                 archiveArtifacts artifacts: 'dist/**/*', fingerprint: true
