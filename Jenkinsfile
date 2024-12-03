@@ -7,6 +7,13 @@ pipeline {
                 sh 'npm install'
             }
         }
+
+         stage('Build') {
+            steps {
+                sh 'ng build --prod'
+            }
+        }
+
         stage('Deliver') {
             steps {
                 sh 'chmod -R +rwx ./jenkins/scripts/deliver.sh'
