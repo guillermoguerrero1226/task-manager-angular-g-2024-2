@@ -1,27 +1,48 @@
 pipeline {
     agent any
-    tools {nodejs "NODEJS"}
+
+    tools {
+        nodejs "NODEJS" // El nombre que configuraste en Jenkins
+    }
+
     stages {
-        stage('Install') {
+        stage('Checkout') {
+            steps {
+                checkout develop
+            }
+        }
+
+        stage('Install Dependencies') {
             steps {
                 sh 'npm install'
             }
         }
 
-         stage('Build') {
+        stage('Build') {
             steps {
-                sh 'npm run build'
+                sh 'ng build --prod'
             }
         }
 
-        stage('Deliver') {
+        stage('Test') {
             steps {
-                sh 'chmod -R +rwx ./jenkins/scripts/deliver.sh'
-                sh 'chmod -R +rwx ./jenkins/scripts/kill.sh'
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
+                sh 'ng test --watch=false --browsers=ChromeHeadless'
             }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'dist/**/*', fingerprint: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build completado con éxito.'
+        }
+        failure {
+            echo 'El build ha fallado.'
         }
     }
 }
