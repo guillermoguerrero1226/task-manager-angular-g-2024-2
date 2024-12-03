@@ -2,7 +2,7 @@ pipeline {
     agent any
     tools {nodejs "NODEJS"}
     stages {
-        stage('Build') {
+        stage('Install') {
             steps {
                 sh 'npm install'
             }
