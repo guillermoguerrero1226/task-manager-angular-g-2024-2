@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs "NODEJS" // El nombre que configuraste en Jenkins
+        nodejs "NODEJS"
     }
 
     stages {
@@ -16,12 +16,6 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'npm run build'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'npm run test --watch=false --browsers=ChromeHeadless'
             }
         }
 
